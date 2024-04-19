@@ -1,4 +1,4 @@
-# BiModel
+# BiModel <img src='man/logo/BiModel_logo.png' align="right" height="140" />
 Here package for binomial distribution mixture model is developing.
 
 ## Installation
