@@ -1,0 +1,19 @@
+Package: BiModel
+Type: Package
+Title: BiModel: binomial mixture model clustering
+Version: 0.0.1
+Author: c(
+    person("Mateusz", "Kania",email = "mateusz.kania@polsl.pl", role = c("aut","cre")),
+    person("Karolina", "Widzisz",email = "karolina.widzisz@polsl.pl", role = c("aut","cre")),
+    person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("cre")))
+Maintainer: The package maintainer <mateusz.kania@polsl.pl>
+Description: Bla bla bla. Bla bla super bla bla.
+Depends:
+    R (>= 2.10),
+    stats
+Imports: 
+   matrixStats, methods
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.0
