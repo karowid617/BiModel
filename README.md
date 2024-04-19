@@ -5,7 +5,7 @@ Here package for binomial distribution mixture model is developing.
 You can install the package from [GitHub](https://github.com/) with:
 ``` r
 # install.packages("devtools")
-devtools::install_github("JoannaZyla/BiModel")  # update in final location
+devtools::install_github("karowid617/BiModel")  # update in final location
 ```
 
 ## Manual
