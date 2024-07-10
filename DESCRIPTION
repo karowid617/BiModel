@@ -10,10 +10,10 @@ Maintainer: The package maintainer <mateusz.kania@polsl.pl>
 Description: Bla bla bla. Bla bla super bla bla.
 Depends:
     R (>= 2.10),
-    stats
+    stats, ClusterR
 Imports: 
    matrixStats, methods
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2

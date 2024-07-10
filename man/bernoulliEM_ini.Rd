@@ -11,7 +11,7 @@ bernoulliEM_ini(xdata, k, ini)
 
 \item{k}{Number of clusters to divide your data.}
 
-\item{ini}{Method for parameters initialization. There are two options 'random' or 'kmeans'.}
+\item{ini}{Method for parameters initialization. There are three options 'random','kmeans' or "kmeanspp".}
 }
 \value{
 Function returns a \code{dlist} which contains: \describe{

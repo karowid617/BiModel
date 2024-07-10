@@ -3,6 +3,7 @@
 export(BernoulliEM)
 export(Bernoulli_M_step)
 export(bernoulliEM_ini)
+import(ClusterR)
 import(stats)
 importFrom(matrixStats,rowLogSumExps)
 importFrom(matrixStats,rowMaxs)

@@ -6,7 +6,7 @@
 #' @param X Matrix of binary data to cluster where in rows there are features and in columns observations.
 #' @param K Number of clusters to divide your data. Default K=2.
 #' @param start_ini Number of starting initialization.
-#' @param ini Method for parameters initialization. There are two options 'random' (default) or 'kmeans'.
+#' @param ini Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".
 #' @param m_iter Maximum number of iteration for EM algorithm. Default value 3000.
 #' @param eps Minimum delta of model LL to stop EM algorithm.Default value 1e-40.
 #'
@@ -64,6 +64,11 @@ BernoulliEM <- function(X, K=2, start_ini = 20, ini = "random", m_iter=3000, eps
       
       rm(logLik_ini, params_ini, params)
     }else if(ini == 'kmeans'){
+      params <- bernoulliEM_ini(xdata = X, k = K, ini = ini)
+      p <- params$p
+      a <- params$a
+      rm(params)
+    }else if(ini == 'kmeanspp'){
       params <- bernoulliEM_ini(xdata = X, k = K, ini = ini)
       p <- params$p
       a <- params$a

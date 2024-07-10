@@ -20,7 +20,7 @@ BernoulliEM(
 
 \item{start_ini}{Number of starting initialization.}
 
-\item{ini}{Method for parameters initialization. There are two options 'random' (default) or 'kmeans'.}
+\item{ini}{Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".}
 
 \item{m_iter}{Maximum number of iteration for EM algorithm. Default value 3000.}
 
