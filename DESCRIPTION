@@ -7,9 +7,8 @@ Author: c(
     person("Karolina", "Widzisz",email = "karolina.widzisz@polsl.pl", role = c("aut","cre")),
     person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("cre")))
 Maintainer: The package maintainer <mateusz.kania@polsl.pl>
-Description: Bla bla bla. Bla bla super bla bla.
 Depends:
-    R (>= 2.10),
+    R (>= 3.2),
     stats, ClusterR
 Imports: 
    matrixStats, methods
