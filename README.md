@@ -21,5 +21,3 @@ BMM_res<-BernoulliEM(example$nouli_data, K = 2,start_ini = 20,ini = "kmeans",m_i
 ```
 
 ## References
-Polanski, A., Marczyk, M., Pietrowska, M., Widlak, P., Polanska, J., 2018. Initializing the em algorithm for univariate gaussian, multi-component, heteroscedastic mixture models by dynamic programming partitions. International Journal of Computational Methods 15, 1850012.
-
