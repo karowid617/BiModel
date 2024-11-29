@@ -72,7 +72,7 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
     k <- 2
     stop <- FALSE
     
-    while(k<K && stop == FALSE){
+    while(k<=K && stop == FALSE){
       cat("Component:", k, '\n')
       res[[k-1]] <- BernoulliEM(X, k, start_ini, ini, m_iter, eps, IC) 
       
