@@ -58,7 +58,7 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
 
   
   IC_list <- c("AIC","AICc", "BIC")
-  if (!opts$IC %in% IC_list) {
+  if (!IC %in% IC_list) {
     stop("Criterion not implemented. Please use AIC, AICc, BIC.")
   }
   
