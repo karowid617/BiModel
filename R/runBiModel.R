@@ -1,6 +1,50 @@
-library(dplyr)
-library(purrr)
-library(ggplot2)
+#' Function to perform binomial mixture model (BMM)
+#'
+#' Function description
+#'
+#'
+#' @param X Matrix of binary data to cluster where in rows there are features and in columns observations.
+#' @param fixed description
+#' @param K Number of clusters to divide your data. Default K=2.
+#' @param start_ini Number of starting initialization.
+#' @param ini Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".
+#' @param m_iter Maximum number of iteration for EM algorithm. Default value 3000.
+#' @param eps Minimum delta of model LL to stop EM algorithm.Default value 1e-40.
+#' @param IC description
+#' @param quick_stop description
+#' @param signi description
+#' @param plot description
+#' 
+#' @returns Function returns a \code{list} which contains: \describe{
+#'  \item{probs}{Matrix of finall probabilities for each observation and cluster.}
+#'  \item{alphas}{Finall vector of each cluster weight in Bernoulli mixture model.}
+#'  \item{clusters}{Cluster assigment of each observation.}
+#'  \item{iter}{Number of EM interations.}
+#'  \item{delta}{Final EM step delta fo algorithm stop.}
+#'  \item{bic}{Bayesian information criterion (BIC) value for fitted model.}
+#'  \item{ll}{Log-Likelihood of fitted model in clustering.}
+#' }
+#' 
+#' @importFrom dplyr bind_rows
+#' @importFrom purrr map
+#' @import ggplot2
+#' @importFrom methods hasArg
+#' 
+#' @examples
+#' \dontrun{
+#' data(example)
+#' res<-BernoulliEM(example$nouli_data, 4, start_ini = 20, ini = "random", m_iter=3000, eps=1e-40)
+#' }
+#' 
+#' @seealso \code{\link{BernoulliEM}}
+#'
+#' @export
+
+
+
+# library(dplyr)
+# library(purrr)
+# library(ggplot2)
 
 runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random", 
                        m_iter=1000, eps=1e-6, IC = "BIC", 
