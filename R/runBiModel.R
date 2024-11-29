@@ -111,21 +111,3 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
   
   return(results = res)
 }
-
-# options(width = 80)
-# n <- 100
-# for (ii in 1:n) {
-#   extra <- nchar('||100%')
-#   width <- options()$width
-#   step <- round(ii / n * (width - extra))
-#   text <- sprintf('|%s%s|% 3s%%', strrep('=', step),
-#                   strrep(' ', width - step - extra), round(ii / n * 100))
-#   cat(text)
-#   cat(if (ii == n) '\n' else '\014')
-# }
-
-# for(i in 1:10){
-#   cat("Component:", i, '\n')
-#   Sys.sleep(1)
-# }
-  
