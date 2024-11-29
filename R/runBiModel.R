@@ -85,7 +85,7 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
       }
       k = k+1
     }
-    names(res) <- paste0("K.", 2:k)
+    names(res) <- paste0("K.", 2:k-1)
     
     if(plot == TRUE){
       tmp <- res %>% bind_rows() %>% split.default(names(.)) %>% map(na.omit)
