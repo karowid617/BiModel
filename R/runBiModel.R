@@ -50,7 +50,7 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
                        m_iter=1000, eps=1e-6, IC = "BIC", 
                        quick_stop = FALSE, signi = 0.05,
                        plot = FALSE){
-  cat("test")
+  print("test")
   if (!hasArg("X")){
     stop("No data.")}
   
