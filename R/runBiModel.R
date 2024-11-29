@@ -72,6 +72,7 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
     stop <- FALSE
     
     while(k<=K && stop == FALSE){
+      cat("Component:", K, '\n')
       res[[k-1]] <- BernoulliEM(X, k, start_ini, ini, m_iter, eps, IC) 
       
       if(quick_stop == TRUE && length(res)>1){
@@ -89,7 +90,7 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
       tmp <- res %>% bind_rows() %>% split.default(names(.)) %>% map(na.omit)
       tmp$ic$ic
       
-      df <- data.frame("K" = 1:k, "IC" = tmp$ic$ic)
+      df <- data.frame("K" = 1:k-1, "IC" = tmp$ic$ic)
       
       
       plt <- ggplot(df, aes(x = K, y = IC))+
@@ -110,3 +111,21 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
   
   return(results = res)
 }
+
+# options(width = 80)
+# n <- 100
+# for (ii in 1:n) {
+#   extra <- nchar('||100%')
+#   width <- options()$width
+#   step <- round(ii / n * (width - extra))
+#   text <- sprintf('|%s%s|% 3s%%', strrep('=', step),
+#                   strrep(' ', width - step - extra), round(ii / n * 100))
+#   cat(text)
+#   cat(if (ii == n) '\n' else '\014')
+# }
+
+# for(i in 1:10){
+#   cat("Component:", i, '\n')
+#   Sys.sleep(1)
+# }
+  
