@@ -32,11 +32,11 @@
 #' @seealso \code{\link{bernoulliEM_ini}}
 #'
 #' @export
-BernoulliEM <- function(X, K=2, start_ini = 20, ini = "random", m_iter=3000, eps=1e-40){
+BernoulliEM <- function(X, K=2, start_ini = 20, ini = "random", m_iter=3000, eps=1e-40, IC = "BIC"){
   
     # Out definition ----
     res <- list('probs' = NULL, 'alphas' = NULL, 'clusters' = NULL, 'itr' = NULL, 
-                'delta' = NULL, 'bic' = NULL, 'll' = NULL)
+                'delta' = NULL, 'ic' = NULL, 'll' = NULL, 'n_params' = NULL)
     
     # Arguments check ----
     if (!hasArg("X")){
@@ -120,11 +120,26 @@ BernoulliEM <- function(X, K=2, start_ini = 20, ini = "random", m_iter=3000, eps
     W = dim(p)[2]+1 # 1 stends for alpha for each k
     n = nrow(X)
     
-    BIC = -2*logL+((W*K)-1)*log(n)
+    n_params = (W*K)-1
+    
+    IC <- switch(IC,
+                 "AIC" = {
+                   AIC = -2*logL+2*n_params
+                 },
+                 "AICc" = {
+                   AICc = -2*logL+2*n_params+((2*n_params^2 + 2*n_params)/(n - n_params - 1))
+                 },
+                 "BIC" = {
+                   BIC = -2*logL+n_params*log(n)
+                 })
+    
+    # BIC = -2*logL+((W*K)-1)*log(n)
     
     res$clusters <- profil
-    res$bic <- BIC
+    # res$bic <- BIC
+    res$ic <- IC
     res$ll <- logL
+    res$n_params <- n_params
     res$delta <- delta
     res$itr <- n_iter
 

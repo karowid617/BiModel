@@ -10,7 +10,8 @@ BernoulliEM(
   start_ini = 20,
   ini = "random",
   m_iter = 3000,
-  eps = 1e-40
+  eps = 1e-40,
+  IC = "BIC"
 )
 }
 \arguments{
