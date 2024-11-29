@@ -82,8 +82,8 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
         if(p.val<signi){
           stop = TRUE
         }
-        k = k+1
       }
+      k = k+1
     }
     names(res) <- paste0("K.", 2:k)
     
