@@ -4,16 +4,16 @@
 #'
 #'
 #' @param X Matrix of binary data to cluster where in rows there are features and in columns observations.
-#' @param fixed description
 #' @param K Number of clusters to divide your data. Default K=2.
 #' @param start_ini Number of starting initialization.
 #' @param ini Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".
-#' @param m_iter Maximum number of iteration for EM algorithm. Default value 3000.
-#' @param eps Minimum delta of model LL to stop EM algorithm.Default value 1e-40.
-#' @param IC description
-#' @param quick_stop description
-#' @param signi description
-#' @param plot description
+#' @param m_iter Maximum number of iteration for EM algorithm. Default value 1000.
+#' @param eps Minimum delta of model LL to stop EM algorithm.Default value 1e-6.
+#' @param IC Information criterion used to select the number of model components. Possible methods are "AIC","AICc", "BIC" (default).
+#' @param quick_stop Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).
+#' @param signi Significance level set for Likelihood Ratio Test (0.05, by default).
+#' @param fixed Logical value. Fit BMM for selected number of components given by K (FALSE, by default).
+#' @param plot Logical value. If TRUE, the IC plot will be displayed (FALSE, by default).
 #' 
 #' @returns Function returns a \code{list} which contains: \describe{
 #'  \item{probs}{Matrix of finall probabilities for each observation and cluster.}
@@ -23,10 +23,9 @@
 #'  \item{delta}{Final EM step delta fo algorithm stop.}
 #'  \item{bic}{Bayesian information criterion (BIC) value for fitted model.}
 #'  \item{ll}{Log-Likelihood of fitted model in clustering.}
+#'  \item{n_params}{Number of parameters of fitted model.}
 #' }
 #' 
-#' @importFrom dplyr bind_rows
-#' @importFrom purrr map
 #' @import ggplot2
 #' @importFrom methods hasArg
 #' 
@@ -46,17 +45,17 @@
 # library(purrr)
 # library(ggplot2)
 
-runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random", 
+runBiModel <- function(X, K=2, start_ini = 20, ini = "random", 
                        m_iter=1000, eps=1e-6, IC = "BIC", 
-                       quick_stop = FALSE, signi = 0.05,
-                       plot = FALSE){
+                       quick_stop = TRUE, signi = 0.05,
+                       fixed = FALSE, plot = FALSE){
   print("test")
   if (!hasArg("X")){
     stop("No data.")}
   
   if (length(X) < 2){
     stop("Not enough data.")}
-
+  
   
   IC_list <- c("AIC","AICc", "BIC")
   if (!IC %in% IC_list) {
@@ -77,34 +76,44 @@ runBiModel <- function(X, fixed = TRUE, K=2, start_ini = 20, ini = "random",
       res[[k-1]] <- BernoulliEM(X, k, start_ini, ini, m_iter, eps, IC) 
       
       if(quick_stop == TRUE && length(res)>1){
-        Loglik.test <- -2*(res[[k-1]]$ll - res[[k-2]]$ll)
-        p.val <- pchisq(Loglik.test, df = res[[k-2]]$n_params - res[[k-1]]$n_params, lower.tail = FALSE)
+        Loglik.test <- -2*(res[[k-2]]$ll - res[[k-1]]$ll)
+        p.val <- pchisq(Loglik.test, df = res[[k-1]]$n_params - res[[k-2]]$n_params, lower.tail = FALSE)
         if(p.val<signi){
           stop = TRUE
         }
       }
       k = k+1
     }
-    names(res) <- paste0("K.", 2:k-1)
+    print(length(res))
+    print(length(2:k-1))
+    print(length(2:(k-1)))
+    names(res) <- paste0("K.", 2:(k-1))
     
     if(plot == TRUE){
-      tmp <- res %>% bind_rows() %>% split.default(names(.)) %>% map(na.omit)
-      tmp$ic$ic
+      ic_vec <- c()
+      # ll_vec <- c()
+      for(i in names(res)){
+        ic_vec <- c(ic_vec, res[[i]]$ic)
+        # ll_vec <- c(ll_vec, res[[i]]$ll)
+      }
       
-      df <- data.frame("K" = 1:k-1, "IC" = tmp$ic$ic)
+      # df <- data.frame("K" = 2:(k-1), "IC" = ic_vec, "LogLik" = ll_vec)
+      df <- data.frame("K" = 2:(k-1), "IC" = ic_vec)
       
       
       plt <- ggplot(df, aes(x = K, y = IC))+
-        geom_line(color = 'grey', linewidth = 1)+
-        geom_point(color = 'red', size = 2)+
-        geom_vline(xintercept = min(df$IC), color = 'blue', linetype = 'dashed')+
+        geom_line(color = 'steelblue2', linewidth = 1.5)+
+        geom_point(color = 'steelblue4', size = 3)+
+        geom_vline(xintercept = df$K[which.min(df$IC)], color = 'red3', linetype = 'dashed', linewidth = 1)+
         scale_x_continuous(breaks=seq(2, k, 1))+
         xlab("Number of components (K)")+
         ylab(IC)+
         theme_bw()+
         ggtitle(paste0(IC," values for different number of clusters"))
       
+      
       print(plt)
+      print(df)
     }
   }else{
     res <- BernoulliEM(X, K, start_ini, ini, m_iter, eps, IC)
