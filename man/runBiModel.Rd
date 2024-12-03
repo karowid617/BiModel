@@ -6,22 +6,20 @@
 \usage{
 runBiModel(
   X,
-  fixed = TRUE,
   K = 2,
   start_ini = 20,
   ini = "random",
   m_iter = 1000,
   eps = 1e-06,
   IC = "BIC",
-  quick_stop = FALSE,
+  quick_stop = TRUE,
   signi = 0.05,
+  fixed = FALSE,
   plot = FALSE
 )
 }
 \arguments{
 \item{X}{Matrix of binary data to cluster where in rows there are features and in columns observations.}
-
-\item{fixed}{description}
 
 \item{K}{Number of clusters to divide your data. Default K=2.}
 
@@ -29,17 +27,19 @@ runBiModel(
 
 \item{ini}{Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".}
 
-\item{m_iter}{Maximum number of iteration for EM algorithm. Default value 3000.}
+\item{m_iter}{Maximum number of iteration for EM algorithm. Default value 1000.}
 
-\item{eps}{Minimum delta of model LL to stop EM algorithm.Default value 1e-40.}
+\item{eps}{Minimum delta of model LL to stop EM algorithm.Default value 1e-6.}
 
-\item{IC}{description}
+\item{IC}{Information criterion used to select the number of model components. Possible methods are "AIC","AICc", "BIC" (default).}
 
-\item{quick_stop}{description}
+\item{quick_stop}{Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).}
 
-\item{signi}{description}
+\item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
 
-\item{plot}{description}
+\item{fixed}{Logical value. Fit BMM for selected number of components given by K (FALSE, by default).}
+
+\item{plot}{Logical value. If TRUE, the IC plot will be displayed (FALSE, by default).}
 }
 \value{
 Function returns a \code{list} which contains: \describe{
@@ -50,6 +50,7 @@ Function returns a \code{list} which contains: \describe{
  \item{delta}{Final EM step delta fo algorithm stop.}
  \item{bic}{Bayesian information criterion (BIC) value for fitted model.}
  \item{ll}{Log-Likelihood of fitted model in clustering.}
+ \item{n_params}{Number of parameters of fitted model.}
 }
 }
 \description{
