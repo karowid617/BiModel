@@ -6,7 +6,7 @@
 #' @param X Matrix of binary data to cluster where in rows there are features and in columns observations.
 #' @param K Number of clusters to divide your data. Default K=2.
 #' @param start_ini Number of starting initialization.
-#' @param ini Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".
+#' @param ini Method for parameters initialization. There are three options "random" (default), "kmeans" or "kmeanspp".
 #' @param m_iter Maximum number of iteration for EM algorithm. Default value 1000.
 #' @param eps Minimum delta of model LL to stop EM algorithm.Default value 1e-6.
 #' @param IC Information criterion used to select the number of model components. Possible methods are "AIC","AICc", "BIC" (default).
@@ -47,7 +47,7 @@
 
 runBiModel <- function(X, K=2, start_ini = 20, ini = "random", 
                        m_iter=1000, eps=1e-6, IC = "BIC", 
-                       quick_stop = TRUE, signi = 0.05,
+                       signi = 0.05, quick_stop = TRUE,
                        fixed = FALSE, plot = FALSE){
   print("test")
   if (!hasArg("X")){
@@ -65,7 +65,7 @@ runBiModel <- function(X, K=2, start_ini = 20, ini = "random",
   if(fixed == FALSE){
     
     if (K < 2){
-      stop("K (no of components) must be larger than 1.")}
+      stop("K (No. of components) must be larger than 1.")}
     
     res <- list()
     k <- 2
@@ -84,37 +84,36 @@ runBiModel <- function(X, K=2, start_ini = 20, ini = "random",
       }
       k = k+1
     }
-    print(length(res))
-    print(length(2:k-1))
-    print(length(2:(k-1)))
+
     names(res) <- paste0("K.", 2:(k-1))
     
-    if(plot == TRUE){
-      ic_vec <- c()
-      # ll_vec <- c()
-      for(i in names(res)){
-        ic_vec <- c(ic_vec, res[[i]]$ic)
-        # ll_vec <- c(ll_vec, res[[i]]$ll)
-      }
-      
-      # df <- data.frame("K" = 2:(k-1), "IC" = ic_vec, "LogLik" = ll_vec)
-      df <- data.frame("K" = 2:(k-1), "IC" = ic_vec)
-      
-      
-      plt <- ggplot(df, aes(x = K, y = IC))+
-        geom_line(color = 'steelblue2', linewidth = 1.5)+
-        geom_point(color = 'steelblue4', size = 3)+
-        geom_vline(xintercept = df$K[which.min(df$IC)], color = 'red3', linetype = 'dashed', linewidth = 1)+
-        scale_x_continuous(breaks=seq(2, k, 1))+
-        xlab("Number of components (K)")+
-        ylab(IC)+
-        theme_bw()+
-        ggtitle(paste0(IC," values for different number of clusters"))
-      
-      
-      print(plt)
-      print(df)
+    ic_vec <- c()
+    # ll_vec <- c()
+    for(i in names(res)){
+      ic_vec <- c(ic_vec, res[[i]]$ic)
+      # ll_vec <- c(ll_vec, res[[i]]$ll)
     }
+    
+    # df <- data.frame("K" = 2:(k-1), "IC" = ic_vec, "LogLik" = ll_vec)
+    df <- data.frame("K" = 2:(k-1), "IC" = ic_vec)
+    
+    
+    plt <- ggplot(df, aes(x = K, y = IC))+
+      geom_line(color = 'steelblue2', linewidth = 1.5)+
+      geom_point(color = 'steelblue4', size = 3)+
+      geom_vline(xintercept = df$K[which.min(df$IC)], color = 'red3', linetype = 'dashed', linewidth = 1)+
+      scale_x_continuous(breaks=seq(2, k, 1))+
+      xlab("Number of components (K)")+
+      ylab(IC)+
+      theme_bw()+
+      ggtitle(paste0(IC," values for different number of clusters"))
+    
+    if(plot == TRUE){
+      print(plt)
+    }
+    
+    res <- c(res, plot = plt)
+    
   }else{
     res <- BernoulliEM(X, K, start_ini, ini, m_iter, eps, IC)
   }

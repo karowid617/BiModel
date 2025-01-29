@@ -6,7 +6,7 @@
 #' @param X Matrix of binary data to cluster where in rows there are features and in columns observations.
 #' @param K Number of clusters to divide your data. Default K=2.
 #' @param start_ini Number of starting initialization.
-#' @param ini Method for parameters initialization. There are three options 'random' (default), 'kmeans' or "kmeanspp".
+#' @param ini Method for parameters initialization. There are three options "random" (default), "kmeans" or "kmeanspp".
 #' @param m_iter Maximum number of iteration for EM algorithm. Default value 3000.
 #' @param eps Minimum delta of model LL to stop EM algorithm.Default value 1e-40.
 #'

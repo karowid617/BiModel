@@ -5,10 +5,10 @@
 #'
 #' @param xdata Matrix of binary data to cluster where in rows there are features and in columns observations.
 #' @param k Number of clusters to divide your data.
-#' @param ini Method for parameters initialization. There are three options 'random','kmeans' or "kmeanspp".
+#' @param ini Method for parameters initialization. There are three options "random","kmeans" or "kmeanspp".
 #'
 #' @returns Function returns a \code{dlist} which contains: \describe{
-#'  \item{p}{Matrix of probabilites for each observation and cluster}
+#'  \item{p}{Matrix of probabilites for each observation and cluster.}
 #'  \item{a}{Vecotr of each cluster weight in Bernoulli mixture model.}
 #' }
 #'
